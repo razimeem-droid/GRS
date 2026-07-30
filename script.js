@@ -61,36 +61,126 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Gentle Reveal Animations Apple Style
-    const panels = document.querySelectorAll('.panel');
-    
+    // Create Scroll to Top Button
+    const scrollTopBtn = document.createElement('button');
+    scrollTopBtn.innerHTML = '<i class="ph ph-arrow-up"></i>';
+    scrollTopBtn.className = 'scroll-top';
+    scrollTopBtn.setAttribute('aria-label', 'Scroll to top');
+    document.body.appendChild(scrollTopBtn);
+
+    // Navbar scroll effect
+    const navbar = document.querySelector('.navbar');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        // Navbar glassmorphism effect
+        if (currentScroll > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+        
+        // Scroll to top button visibility
+        if (currentScroll > 500) {
+            scrollTopBtn.classList.add('visible');
+        } else {
+            scrollTopBtn.classList.remove('visible');
+        }
+        
+        lastScroll = currentScroll;
+    });
+
+    // Scroll to top functionality
+    scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
     // Smooth scroll for nav
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const navHeight = navbar.offsetHeight;
+                const targetPosition = target.offsetTop - navHeight;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
         });
     });
 
-    window.addEventListener("scroll", () => {
-        // Intro Animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
+    // Advanced Intersection Observer for scroll animations
+    const observerOptions = {
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px"
+    };
 
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.section-headers, .contact-glass-container').forEach(el => {
-            revealObserver.observe(el);
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Optional: Stop observing once revealed
+                // revealObserver.unobserve(entry.target);
+            }
         });
+    }, observerOptions);
+
+    // Observe elements for reveal animation
+    const elementsToReveal = document.querySelectorAll(
+        '.section-headers, .product-grid, .uniform-grid, .about-grid, .contact-container'
+    );
+    
+    elementsToReveal.forEach(el => {
+        revealObserver.observe(el);
     });
+
+    // Form submission handling with animation
+    const contactForm = document.getElementById('contact-form');
+    const submitBtn = document.querySelector('.btn-submit');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Animate button on submit
+            submitBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission (replace with actual API call)
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="ph ph-check"></i> Message Sent!';
+                submitBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                
+                // Reset form
+                contactForm.reset();
+                
+                // Reset button after delay
+                setTimeout(() => {
+                    submitBtn.innerHTML = 'Send Request';
+                    submitBtn.style.background = '';
+                    submitBtn.disabled = false;
+                }, 3000);
+            }, 1500);
+        });
+    }
+
+    // Add subtle parallax to hero image
+    const heroImage = document.querySelector('.hero-image-mount');
+    if (heroImage) {
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const maxScroll = window.innerHeight * 0.5;
+            if (scrolled < maxScroll) {
+                const yPos = Math.min(scrolled * 0.3, 60);
+                heroImage.style.transform = `perspective(1000px) rotateX(2deg) translateY(${yPos}px)`;
+            }
+        });
+    }
 });
