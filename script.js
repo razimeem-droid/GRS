@@ -70,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Navbar scroll effect
     const navbar = document.querySelector('.navbar');
-    let lastScroll = 0;
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
@@ -88,8 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             scrollTopBtn.classList.remove('visible');
         }
-        
-        lastScroll = currentScroll;
     });
 
     // Scroll to top functionality
@@ -100,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Smooth scroll for nav
+    // Smooth scroll for nav with offset
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -119,15 +116,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Advanced Intersection Observer for scroll animations
     const observerOptions = {
         threshold: 0.15,
-        rootMargin: "0px 0px -50px 0px"
+        rootMargin: "0px 0px -80px 0px"
     };
 
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if(entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Optional: Stop observing once revealed
-                // revealObserver.unobserve(entry.target);
             }
         });
     }, observerOptions);
@@ -141,6 +136,43 @@ document.addEventListener("DOMContentLoaded", () => {
         revealObserver.observe(el);
     });
 
+    // Stats Counter Animation
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                const statNumbers = entry.target.querySelectorAll('.stat-number[data-count]');
+                statNumbers.forEach(stat => {
+                    const target = parseInt(stat.getAttribute('data-count'));
+                    const suffix = stat.textContent.replace(/[0-9]/g, '');
+                    animateCounter(stat, target, suffix);
+                    statsObserver.unobserve(entry.target);
+                });
+            }
+        });
+    }, { threshold: 0.5 });
+
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) {
+        statsObserver.observe(statsSection);
+    }
+
+    function animateCounter(element, target, suffix) {
+        let current = 0;
+        const increment = target / 50;
+        const duration = 2000;
+        const stepTime = duration / 50;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                element.textContent = target + suffix;
+                clearInterval(timer);
+            } else {
+                element.textContent = Math.floor(current) + suffix;
+            }
+        }, stepTime);
+    }
+
     // Form submission handling with animation
     const contactForm = document.getElementById('contact-form');
     const submitBtn = document.querySelector('.btn-submit');
@@ -149,19 +181,15 @@ document.addEventListener("DOMContentLoaded", () => {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            // Animate button on submit
             submitBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Sending...';
             submitBtn.disabled = true;
             
-            // Simulate form submission (replace with actual API call)
             setTimeout(() => {
                 submitBtn.innerHTML = '<i class="ph ph-check"></i> Message Sent!';
                 submitBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
                 
-                // Reset form
                 contactForm.reset();
                 
-                // Reset button after delay
                 setTimeout(() => {
                     submitBtn.innerHTML = 'Send Request';
                     submitBtn.style.background = '';
@@ -171,16 +199,46 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Add subtle parallax to hero image
+    // Enhanced parallax effect
     const heroImage = document.querySelector('.hero-image-mount');
     if (heroImage) {
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const maxScroll = window.innerHeight * 0.5;
             if (scrolled < maxScroll) {
-                const yPos = Math.min(scrolled * 0.3, 60);
-                heroImage.style.transform = `perspective(1000px) rotateX(2deg) translateY(${yPos}px)`;
+                const yPos = Math.min(scrolled * 0.2, 40);
+                heroImage.style.transform = `perspective(1200px) rotateX(3deg) scale(0.98) translateY(${yPos}px)`;
             }
+        });
+    }
+
+    // Cursor glow effect on cards
+    document.querySelectorAll('.product-card, .service-card, .apple-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+
+    // Tilt effect on hero image
+    if (heroImage) {
+        heroImage.addEventListener('mousemove', (e) => {
+            const rect = heroImage.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            
+            const rotateX = (0.5 - y) * 6;
+            const rotateY = (x - 0.5) * 6;
+            
+            heroImage.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1)`;
+        });
+        
+        heroImage.addEventListener('mouseleave', () => {
+            heroImage.style.transform = 'perspective(1200px) rotateX(3deg) scale(0.98)';
         });
     }
 });
