@@ -138,8 +138,8 @@ body::before {
 }
 
 /* Logo Styles */
-.logo-img { height: 95px; max-width: 320px; object-fit: contain; }
-.logo-img-large { height: 160px; max-width: 450px; object-fit: contain; margin-bottom: 25px; }
+.logo-img { height: 95px; max-width: 320px; object-fit: contain; transform: scale(0.95); }
+.logo-img-large { height: 160px; max-width: 450px; object-fit: contain; margin-bottom: 25px; transform: scale(0.95); }
 
 /* Panels - Navy #002544 Sections */
 .panel { 
