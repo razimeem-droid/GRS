@@ -1,16 +1,16 @@
 :root {
-    /* Color Palette - Navy Blue Framer Theme */
-    --clr-bg: #0a1020;
-    --clr-bg-alt: #0f1729;
-    --clr-bg-card: rgba(15, 23, 41, 0.6);
-    --clr-bg-glass: rgba(20, 30, 55, 0.5);
+    /* Color Palette - Navy Blue #002544 Theme */
+    --clr-bg: #002544;
+    --clr-bg-alt: #003259;
+    --clr-bg-card: rgba(0, 50, 89, 0.5);
+    --clr-bg-glass: rgba(0, 37, 68, 0.6);
     --clr-text: #ffffff;
     --clr-text-muted: #94a3b8;
     --clr-text-secondary: #64748b;
     --clr-blue: #3b82f6;
     --clr-blue-hover: #60a5fa;
-    --clr-navy: #1e3a5f;
-    --clr-navy-light: #2d4a6f;
+    --clr-navy: #002544;
+    --clr-navy-light: #003d6f;
     --clr-accent: #8b5cf6;
     --clr-accent-2: #06b6d4;
     --clr-success: #10b981;
@@ -18,11 +18,11 @@
     /* Gradients - Navy Blue Theme */
     --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
     --gradient-secondary: linear-gradient(135deg, #f472b6 0%, #c084fc 100%);
-    --gradient-navy: linear-gradient(180deg, #0a1020 0%, #1e3a5f 50%, #0f1729 100%);
+    --gradient-navy: linear-gradient(180deg, #002544 0%, #003d6f 50%, #003259 100%);
     --gradient-mesh: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.2) 0px, transparent 50%),
                      radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
                      radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%),
-                     radial-gradient(at 0% 100%, rgba(59, 130, 246, 0.15) 0px, transparent 50%);
+                     radial-gradient(at 0% 100%, rgba(0, 113, 227, 0.2) 0px, transparent 50%);
     --gradient-glow: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.5) 0%, transparent 70%);
     --gradient-text: linear-gradient(135deg, #fff 0%, #93c5fd 50%, #60a5fa 100%);
     --gradient-text-accent: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
@@ -87,12 +87,15 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--gradient-mesh);
+    background: radial-gradient(at 0% 0%, rgba(0, 37, 68, 0.3) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(0, 50, 89, 0.3) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 37, 68, 0.3) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(0, 60, 120, 0.2) 0px, transparent 50%);
     pointer-events: none;
     z-index: -1;
 }
 
-/* Glowing Orbs - Navy Blue Tones */
+/* Glowing Orbs - #002544 Navy Tones */
 .orb {
     position: fixed;
     border-radius: 50%;
@@ -105,7 +108,7 @@ body::before {
 .orb-1 {
     width: 450px;
     height: 450px;
-    background: #1e3a5f;
+    background: #003d6f;
     top: -100px;
     right: -100px;
 }
@@ -113,7 +116,7 @@ body::before {
 .orb-2 {
     width: 550px;
     height: 550px;
-    background: #2d4a6f;
+    background: #004a8a;
     bottom: -150px;
     left: -150px;
     animation-delay: -5s;
@@ -122,7 +125,7 @@ body::before {
 .orb-3 {
     width: 350px;
     height: 350px;
-    background: #1a4d7c;
+    background: #005099;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -138,7 +141,7 @@ body::before {
 .logo-img { height: 95px; max-width: 320px; object-fit: contain; }
 .logo-img-large { height: 160px; max-width: 450px; object-fit: contain; margin-bottom: 25px; }
 
-/* Panels - Navy Blue Sections */
+/* Panels - Navy #002544 Sections */
 .panel { 
     padding: 120px 5%; 
     display: flex; 
@@ -149,7 +152,7 @@ body::before {
 }
 
 .panel-light { 
-    background: linear-gradient(180deg, var(--clr-bg-alt) 0%, rgba(15, 23, 41, 0.8) 100%);
+    background: linear-gradient(180deg, #003259 0%, rgba(0, 37, 68, 0.7) 100%);
     border-top: var(--border-light);
     border-bottom: var(--border-light);
 }
@@ -295,14 +298,14 @@ body::before {
 .btn-secondary { background: transparent; color: var(--clr-blue); border: 1px solid var(--clr-blue); }
 .btn-secondary:hover { background: var(--clr-blue); color: #fff; }
 
-/* Fixed Navbar - Navy Glassmorphism */
+/* Fixed Navbar - Navy #002544 Glassmorphism */
 .navbar { 
     position: fixed; 
     top: 0; 
     left: 0; 
     right: 0; 
     height: 90px; 
-    background: rgba(10, 16, 32, 0.8);
+    background: rgba(0, 37, 68, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     display: flex; 
@@ -316,7 +319,7 @@ body::before {
 
 .navbar.scrolled {
     height: 75px;
-    background: rgba(10, 16, 32, 0.95);
+    background: rgba(0, 37, 68, 0.95);
     box-shadow: var(--shadow-lg);
 }
 
@@ -531,10 +534,10 @@ body::before {
     transform: translateY(0);
 }
 
-/* Glassmorphism Cards - Navy Theme */
+/* Glassmorphism Cards - Navy #002544 Theme */
 .product-card, .service-card, .apple-card {
     border-radius: var(--radius-lg); 
-    background: var(--clr-bg-card); 
+    background: rgba(0, 37, 68, 0.4); 
     overflow: hidden; 
     position: relative; 
     cursor: pointer; 
@@ -575,7 +578,7 @@ body::before {
     width: 100%; 
     height: 240px; 
     overflow: hidden; 
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    background: linear-gradient(135deg, #001f3a 0%, #002d55 100%);
     z-index: 1;
 }
 
@@ -670,7 +673,7 @@ body::before {
 
 /*Glass Form Container */
 .apple-form {
-    background: rgba(15, 23, 41, 0.7);
+    background: rgba(0, 37, 68, 0.6);
     border: var(--border-light);
     border-radius: var(--radius-xl);
     padding: 40px;
@@ -684,8 +687,8 @@ body::before {
 
 .apple-form input, .apple-form select, .apple-form textarea { 
     width: 100%; 
-    background: rgba(20, 30, 55, 0.6); 
-    border: 2px solid rgba(59, 130, 246, 0.15); 
+    background: rgba(0, 37, 68, 0.7); 
+    border: 2px solid rgba(59, 130, 246, 0.2); 
     color: var(--clr-text); 
     padding: 16px 22px; 
     border-radius: var(--radius-md); 
@@ -697,7 +700,7 @@ body::before {
 
 .apple-form input:focus, .apple-form select:focus, .apple-form textarea:focus { 
     border-color: var(--clr-blue); 
-    background: rgba(30, 45, 80, 0.8); 
+    background: rgba(0, 50, 89, 0.8); 
     box-shadow: 0 0 0 4px rgba(59,130,246,0.2);
     transform: translateY(-2px);
 }
@@ -759,9 +762,9 @@ body::before {
     font-size: 1.05rem;
 }
 
-/* Dark Footer - Navy Blue Style */
+/* Dark Footer - #002544 Navy */
 .dark-footer { 
-    background: linear-gradient(180deg, var(--clr-bg) 0%, #081018 100%); 
+    background: linear-gradient(180deg, #002544 0%, #001830 100%); 
     color: #fff; 
     margin-top: 100px; 
     padding: 80px 5% 50px; 
@@ -892,7 +895,7 @@ body::before {
 }
 
 .stat-card {
-    background: rgba(15, 23, 41, 0.6);
+    background: rgba(0, 37, 68, 0.4);
     border: var(--border-light);
     border-radius: var(--radius-lg);
     padding: 40px 30px;
